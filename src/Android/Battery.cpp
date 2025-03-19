@@ -8,7 +8,7 @@
 
 gcc_visibility_default
 JNIEXPORT void JNICALL
-Java_org_xcsoar_BatteryReceiver_setBatteryPercent([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls,
+Java_org_xcsoar2_BatteryReceiver_setBatteryPercent([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls,
                                                   jint value, jint plugged)
 {
   auto &info = Power::global_info;

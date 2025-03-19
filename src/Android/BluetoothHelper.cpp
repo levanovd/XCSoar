@@ -32,14 +32,14 @@ BluetoothHelper::Initialise(JNIEnv *env) noexcept
 {
   assert(env != nullptr);
 
-  if (!cls.FindOptional(env, "org/xcsoar/BluetoothHelper"))
+  if (!cls.FindOptional(env, "org/xcsoar2/BluetoothHelper"))
     /* Android < 2.0 doesn't have Bluetooth support */
     return false;
 
 
   ctor = env->GetMethodID(cls, "<init>",
                           "(Landroid/content/Context;"
-                          "Lorg/xcsoar/PermissionManager;"
+                          "Lorg/xcsoar2/PermissionManager;"
                           ")V");
   if (Java::DiscardException(env)) {
     /* need to check for Java exceptions again because the first
@@ -53,23 +53,23 @@ BluetoothHelper::Initialise(JNIEnv *env) noexcept
   getNameFromAddress_method = env->GetMethodID(cls, "getNameFromAddress",
                                                "(Ljava/lang/String;)Ljava/lang/String;");
   connectSensor_method = env->GetMethodID(cls, "connectSensor",
-                                          "(Ljava/lang/String;Lorg/xcsoar/SensorListener;)"
-                                          "Lorg/xcsoar/BluetoothSensor;");
+                                          "(Ljava/lang/String;Lorg/xcsoar2/SensorListener;)"
+                                          "Lorg/xcsoar2/BluetoothSensor;");
   connect_method = env->GetMethodID(cls, "connect",
                                     "(Ljava/lang/String;)"
-                                    "Lorg/xcsoar/AndroidPort;");
+                                    "Lorg/xcsoar2/AndroidPort;");
   createServer_method = env->GetMethodID(cls, "createServer",
-                                         "()Lorg/xcsoar/AndroidPort;");
+                                         "()Lorg/xcsoar2/AndroidPort;");
 
   hm10connect_method = env->GetMethodID(cls, "connectHM10",
                                         "(Ljava/lang/String;)"
-                                        "Lorg/xcsoar/AndroidPort;");
+                                        "Lorg/xcsoar2/AndroidPort;");
   addDetectDeviceListener_method =
     env->GetMethodID(cls, "addDetectDeviceListener",
-                     "(Lorg/xcsoar/DetectDeviceListener;)V");
+                     "(Lorg/xcsoar2/DetectDeviceListener;)V");
   removeDetectDeviceListener_method =
     env->GetMethodID(cls, "removeDetectDeviceListener",
-                     "(Lorg/xcsoar/DetectDeviceListener;)V");
+                     "(Lorg/xcsoar2/DetectDeviceListener;)V");
 
   return true;
 }

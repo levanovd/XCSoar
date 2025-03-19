@@ -41,7 +41,7 @@ AndroidDownloadManager::Initialise(JNIEnv *env) noexcept
   assert(util_class == nullptr);
   assert(env != nullptr);
 
-  if (!util_class.FindOptional(env, "org/xcsoar/DownloadUtil"))
+  if (!util_class.FindOptional(env, "org/xcsoar2/DownloadUtil"))
     return false;
 
   ctor = env->GetMethodID(util_class, "<init>",
@@ -113,7 +113,7 @@ AndroidDownloadManager::OnDownloadComplete(Path path_relative,
 }
 
 JNIEXPORT void JNICALL
-Java_org_xcsoar_DownloadUtil_onDownloadAdded(JNIEnv *env, [[maybe_unused]] jobject obj,
+Java_org_xcsoar2_DownloadUtil_onDownloadAdded(JNIEnv *env, [[maybe_unused]] jobject obj,
                                              jlong j_handler, jstring j_path,
                                              jlong size, jlong position)
 {
@@ -124,7 +124,7 @@ Java_org_xcsoar_DownloadUtil_onDownloadAdded(JNIEnv *env, [[maybe_unused]] jobje
 }
 
 JNIEXPORT void JNICALL
-Java_org_xcsoar_DownloadUtil_onDownloadComplete(JNIEnv *env, [[maybe_unused]] jobject obj,
+Java_org_xcsoar2_DownloadUtil_onDownloadComplete(JNIEnv *env, [[maybe_unused]] jobject obj,
                                                 jlong ptr,
                                                 jstring j_tmp_path,
                                                 jstring j_relative_path,

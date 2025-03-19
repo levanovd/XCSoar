@@ -117,7 +117,7 @@ InitNative(JNIEnv *env) noexcept
 
 gcc_visibility_default
 void
-Java_org_xcsoar_NativeView_initNative(JNIEnv *env, [[maybe_unused]] jclass cls)
+Java_org_xcsoar2_NativeView_initNative(JNIEnv *env, [[maybe_unused]] jclass cls)
 {
   static std::once_flag init_native_flag;
 
@@ -126,7 +126,7 @@ Java_org_xcsoar_NativeView_initNative(JNIEnv *env, [[maybe_unused]] jclass cls)
 
 gcc_visibility_default
 void
-Java_org_xcsoar_NativeView_deinitNative(JNIEnv *env,
+Java_org_xcsoar2_NativeView_deinitNative(JNIEnv *env,
                                         [[maybe_unused]] jclass cls)
 {
   AndroidTextEntryDialog::Deinitialise(env);
@@ -152,7 +152,7 @@ Java_org_xcsoar_NativeView_deinitNative(JNIEnv *env,
 
 gcc_visibility_default
 void
-Java_org_xcsoar_NativeView_onConfigurationChangedNative([[maybe_unused]] JNIEnv *env,
+Java_org_xcsoar2_NativeView_onConfigurationChangedNative([[maybe_unused]] JNIEnv *env,
                                                         [[maybe_unused]] jclass cls,
                                                         jboolean night_mode)
 {
@@ -173,7 +173,7 @@ Java_org_xcsoar_NativeView_onConfigurationChangedNative([[maybe_unused]] JNIEnv 
 
 gcc_visibility_default
 JNIEXPORT jstring JNICALL
-Java_org_xcsoar_NativeView_onReceiveXCTrackTask(JNIEnv *env,
+Java_org_xcsoar2_NativeView_onReceiveXCTrackTask(JNIEnv *env,
                                                 [[maybe_unused]] jclass cls,
                                                 jstring data)
 try {
@@ -185,7 +185,7 @@ try {
 
 gcc_visibility_default
 JNIEXPORT void JNICALL
-Java_org_xcsoar_NativeView_runNative(JNIEnv *env, jobject obj,
+Java_org_xcsoar2_NativeView_runNative(JNIEnv *env, jobject obj,
                                      jobject _context,
                                      jobject _permission_manager,
                                      jint width, jint height,
@@ -313,7 +313,7 @@ try {
 
 gcc_visibility_default
 JNIEXPORT void JNICALL
-Java_org_xcsoar_NativeView_resizedNative(JNIEnv *env, jobject obj,
+Java_org_xcsoar2_NativeView_resizedNative(JNIEnv *env, jobject obj,
                                          jint width, jint height)
 {
   const std::scoped_lock shutdown_lock{shutdown_mutex};
@@ -332,7 +332,7 @@ Java_org_xcsoar_NativeView_resizedNative(JNIEnv *env, jobject obj,
 
 gcc_visibility_default
 JNIEXPORT void JNICALL
-Java_org_xcsoar_NativeView_surfaceDestroyedNative(JNIEnv *env, jobject obj)
+Java_org_xcsoar2_NativeView_surfaceDestroyedNative(JNIEnv *env, jobject obj)
 {
   const std::scoped_lock shutdown_lock{shutdown_mutex};
 
@@ -342,7 +342,7 @@ Java_org_xcsoar_NativeView_surfaceDestroyedNative(JNIEnv *env, jobject obj)
 
 gcc_visibility_default
 JNIEXPORT void JNICALL
-Java_org_xcsoar_NativeView_pauseNative(JNIEnv *env, jobject obj)
+Java_org_xcsoar2_NativeView_pauseNative(JNIEnv *env, jobject obj)
 {
   const std::scoped_lock shutdown_lock{shutdown_mutex};
 
@@ -359,7 +359,7 @@ Java_org_xcsoar_NativeView_pauseNative(JNIEnv *env, jobject obj)
 
 gcc_visibility_default
 JNIEXPORT void JNICALL
-Java_org_xcsoar_NativeView_resumeNative(JNIEnv *env, jobject obj)
+Java_org_xcsoar2_NativeView_resumeNative(JNIEnv *env, jobject obj)
 {
   const std::scoped_lock shutdown_lock{shutdown_mutex};
 
@@ -376,7 +376,7 @@ Java_org_xcsoar_NativeView_resumeNative(JNIEnv *env, jobject obj)
 
 gcc_visibility_default
 JNIEXPORT void JNICALL
-Java_org_xcsoar_NativeView_setHapticFeedback([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jobject obj,
+Java_org_xcsoar2_NativeView_setHapticFeedback([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jobject obj,
                                              jboolean on)
 {
   GlobalSettings::haptic_feedback = on;

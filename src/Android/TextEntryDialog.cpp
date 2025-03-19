@@ -39,7 +39,7 @@ AndroidTextEntryDialog::Initialise(JNIEnv *env) noexcept
   assert(text_entry_dialog_class == nullptr);
   assert(env != nullptr);
 
-  text_entry_dialog_class.Find(env, "org/xcsoar/TextEntryDialog");
+  text_entry_dialog_class.Find(env, "org/xcsoar2/TextEntryDialog");
 
   ctor = env->GetMethodID(text_entry_dialog_class, "<init>",
                           "(JLandroid/content/Context;Ljava/lang/String;Ljava/lang/String;I)V");
@@ -52,7 +52,7 @@ AndroidTextEntryDialog::Deinitialise(JNIEnv *env) noexcept
 }
 
 JNIEXPORT void JNICALL
-Java_org_xcsoar_TextEntryDialog_onResult(JNIEnv *env, [[maybe_unused]] jobject obj,
+Java_org_xcsoar2_TextEntryDialog_onResult(JNIEnv *env, [[maybe_unused]] jobject obj,
                                          jlong ptr, jstring value)
 {
   auto &dialog = *(AndroidTextEntryDialog *)(std::size_t)ptr;

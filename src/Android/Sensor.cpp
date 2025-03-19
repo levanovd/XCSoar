@@ -11,7 +11,7 @@ static jmethodID getState_method;
 void
 Initialise(JNIEnv *env) noexcept
 {
-	Java::Class cls(env, "org/xcsoar/AndroidSensor");
+	Java::Class cls(env, "org/xcsoar2/AndroidSensor");
 	getState_method = env->GetMethodID(cls, "getState", "()I");
 }
 

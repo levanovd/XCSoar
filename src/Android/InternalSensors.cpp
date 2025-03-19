@@ -26,17 +26,17 @@ InternalSensors::Initialise(JNIEnv *env)
   assert(!sensors_cls.IsDefined());
   assert(env != nullptr);
 
-  gps_cls.Find(env, "org/xcsoar/InternalGPS");
+  gps_cls.Find(env, "org/xcsoar2/InternalGPS");
 
   gps_ctor_id = env->GetMethodID(gps_cls, "<init>",
                                  "(Landroid/content/Context;"
-                                 "Lorg/xcsoar/PermissionManager;"
-                                 "Lorg/xcsoar/SensorListener;)V");
+                                 "Lorg/xcsoar2/PermissionManager;"
+                                 "Lorg/xcsoar2/SensorListener;)V");
 
-  sensors_cls.Find(env, "org/xcsoar/NonGPSSensors");
+  sensors_cls.Find(env, "org/xcsoar2/NonGPSSensors");
 
   sensors_ctor_id = env->GetMethodID(sensors_cls, "<init>",
-                                     "(Landroid/content/Context;Lorg/xcsoar/SensorListener;)V");
+                                     "(Landroid/content/Context;Lorg/xcsoar2/SensorListener;)V");
 
   mid_sensors_getSubscribableSensors =
     env->GetMethodID(sensors_cls, "getSubscribableSensors", "()[I");

@@ -16,7 +16,7 @@ static jfieldID ptr_field;
 } // namespace NativeInputListener
 
 JNIEXPORT void JNICALL
-Java_org_xcsoar_NativeInputListener_dataReceived(JNIEnv *env, jobject obj,
+Java_org_xcsoar2_NativeInputListener_dataReceived(JNIEnv *env, jobject obj,
                                                  jbyteArray data, jint length)
 {
   jlong ptr = env->GetLongField(obj, NativeInputListener::ptr_field);
@@ -33,7 +33,7 @@ Java_org_xcsoar_NativeInputListener_dataReceived(JNIEnv *env, jobject obj,
 void
 NativeInputListener::Initialise(JNIEnv *env)
 {
-  cls.Find(env, "org/xcsoar/NativeInputListener");
+  cls.Find(env, "org/xcsoar2/NativeInputListener");
 
   ctor = env->GetMethodID(cls, "<init>", "(J)V");
   ptr_field = env->GetFieldID(cls, "ptr", "J");

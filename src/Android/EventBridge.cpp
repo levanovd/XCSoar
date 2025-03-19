@@ -52,7 +52,7 @@ IsCursorKey(unsigned key_code)
 
 gcc_visibility_default
 void
-Java_org_xcsoar_EventBridge_onKeyDown([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls, jint key_code)
+Java_org_xcsoar2_EventBridge_onKeyDown([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls, jint key_code)
 {
   if (event_queue == nullptr)
     /* XCSoar not yet initialised */
@@ -69,7 +69,7 @@ Java_org_xcsoar_EventBridge_onKeyDown([[maybe_unused]] JNIEnv *env, [[maybe_unus
 
 gcc_visibility_default
 void
-Java_org_xcsoar_EventBridge_onKeyUp([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls, jint key_code)
+Java_org_xcsoar2_EventBridge_onKeyUp([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls, jint key_code)
 {
   if (event_queue == nullptr)
     /* XCSoar not yet initialised */
@@ -81,7 +81,7 @@ Java_org_xcsoar_EventBridge_onKeyUp([[maybe_unused]] JNIEnv *env, [[maybe_unused
 
 gcc_visibility_default
 void
-Java_org_xcsoar_EventBridge_onMouseDown([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls,
+Java_org_xcsoar2_EventBridge_onMouseDown([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls,
                                         jint x, jint y)
 {
   if (event_queue == nullptr)
@@ -94,7 +94,7 @@ Java_org_xcsoar_EventBridge_onMouseDown([[maybe_unused]] JNIEnv *env, [[maybe_un
 
 gcc_visibility_default
 void
-Java_org_xcsoar_EventBridge_onMouseUp([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls,
+Java_org_xcsoar2_EventBridge_onMouseUp([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls,
                                       jint x, jint y)
 {
   if (event_queue == nullptr)
@@ -107,7 +107,7 @@ Java_org_xcsoar_EventBridge_onMouseUp([[maybe_unused]] JNIEnv *env, [[maybe_unus
 
 gcc_visibility_default
 void
-Java_org_xcsoar_EventBridge_onMouseMove([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls,
+Java_org_xcsoar2_EventBridge_onMouseMove([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls,
                                         jint x, jint y)
 {
   if (event_queue == nullptr)
@@ -121,7 +121,7 @@ Java_org_xcsoar_EventBridge_onMouseMove([[maybe_unused]] JNIEnv *env, [[maybe_un
 
 gcc_visibility_default
 void
-Java_org_xcsoar_EventBridge_onPointerDown([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls)
+Java_org_xcsoar2_EventBridge_onPointerDown([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls)
 {
   if (event_queue == nullptr)
     /* XCSoar not yet initialised */
@@ -133,7 +133,7 @@ Java_org_xcsoar_EventBridge_onPointerDown([[maybe_unused]] JNIEnv *env, [[maybe_
 
 gcc_visibility_default
 void
-Java_org_xcsoar_EventBridge_onPointerUp([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls)
+Java_org_xcsoar2_EventBridge_onPointerUp([[maybe_unused]] JNIEnv *env, [[maybe_unused]] jclass cls)
 {
   if (event_queue == nullptr)
     /* XCSoar not yet initialised */

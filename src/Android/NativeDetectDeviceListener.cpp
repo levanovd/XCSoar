@@ -15,7 +15,7 @@ static jfieldID ptr_field;
 } // namespace NativeDetectDeviceListener
 
 JNIEXPORT void JNICALL
-Java_org_xcsoar_NativeDetectDeviceListener_onDeviceDetected(JNIEnv *env, jobject obj,
+Java_org_xcsoar2_NativeDetectDeviceListener_onDeviceDetected(JNIEnv *env, jobject obj,
                                                             jint type,
                                                             jstring _address,
                                                             jstring _name,
@@ -39,7 +39,7 @@ Java_org_xcsoar_NativeDetectDeviceListener_onDeviceDetected(JNIEnv *env, jobject
 void
 NativeDetectDeviceListener::Initialise(JNIEnv *env) noexcept
 {
-  cls.Find(env, "org/xcsoar/NativeDetectDeviceListener");
+  cls.Find(env, "org/xcsoar2/NativeDetectDeviceListener");
   ctor = env->GetMethodID(cls, "<init>", "(J)V");
   ptr_field = env->GetFieldID(cls, "ptr", "J");
 }

@@ -12,7 +12,7 @@
 #include <cassert>
 
 JNIEXPORT jstring JNICALL
-Java_org_xcsoar_FileProvider_getWaypointFileForUri(JNIEnv *env, jclass,
+Java_org_xcsoar2_FileProvider_getWaypointFileForUri(JNIEnv *env, jclass,
                                                    jint id, jstring _filename)
 {
   auto w = data_components->waypoints->LookupId(id);
