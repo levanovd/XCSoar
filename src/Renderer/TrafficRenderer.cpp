@@ -3,6 +3,7 @@
 
 #include "TrafficRenderer.hpp"
 #include "ui/canvas/Canvas.hpp"
+#include "ui/canvas/Pen.hpp"
 #include "Screen/Layout.hpp"
 #include "Look/TrafficLook.hpp"
 #include "FLARM/Traffic.hpp"
@@ -10,6 +11,7 @@
 #include "Math/Screen.hpp"
 #include "util/Macros.hpp"
 #include "Asset.hpp"
+#include "Projection/WindowProjection.hpp"
 
 #ifdef ENABLE_OPENGL
 #include "ui/canvas/opengl/Scope.hpp"
@@ -95,6 +97,36 @@ TrafficRenderer::Draw(Canvas &canvas, const TrafficLook &traffic_look,
 
   canvas.SelectHollowBrush();
   canvas.DrawCircle(pt, Layout::FastScale(11u));
+}
+
+void
+TrafficRenderer::Draw(Canvas &canvas, const TrafficLook &traffic_look,
+                      bool fading,
+                      const FlarmTraffic &traffic, const Angle angle,
+                      const FlarmColor color, const PixelPoint pt,
+                      const FlarmTrafficHistory::TrailPoints *trail,
+                      const WindowProjection &projection) noexcept
+{
+  // First draw the trail if available
+  if (!fading && trail != nullptr && !trail->empty()) {
+    // Create a pen for the trail
+    Pen trail_pen(Layout::ScalePenWidth(1), COLOR_GRAY);
+    canvas.Select(trail_pen);
+    
+    // Draw a line connecting the trail points
+    PixelPoint last_point = pt;
+    
+    // Draw the trail as a series of connected lines
+    for (const auto &point : *trail) {
+      if (auto trail_p = projection.GeoToScreenIfVisible(point.location)) {
+        canvas.DrawLine(last_point, *trail_p);
+        last_point = *trail_p;
+      }
+    }
+  }
+  
+  // Then draw the traffic icon
+  Draw(canvas, traffic_look, fading, traffic, angle, color, pt);
 }
 
 

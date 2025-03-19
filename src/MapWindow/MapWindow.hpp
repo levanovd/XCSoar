@@ -18,6 +18,7 @@
 #include "Renderer/TrailRenderer.hpp"
 #include "Weather/Features.hpp"
 #include "Tracking/SkyLines/Features.hpp"
+#include "FLARM/TrafficHistory.hpp"
 
 #include <memory>
 
@@ -125,6 +126,8 @@ protected:
   AirspaceLabelRenderer airspace_label_renderer;
 
   TrailRenderer trail_renderer;
+  
+  mutable FlarmTrafficHistory flarm_traffic_history;
 
   ProtectedTaskManager *task = nullptr;
   const ProtectedRoutePlanner *route_planner = nullptr;

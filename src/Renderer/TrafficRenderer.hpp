@@ -4,6 +4,7 @@
 #pragma once
 
 #include "FLARM/Color.hpp"
+#include "FLARM/TrafficHistory.hpp"
 
 struct PixelPoint;
 class Canvas;
@@ -11,6 +12,7 @@ struct TrafficLook;
 struct FlarmTraffic;
 struct GliderLinkTraffic;
 class Angle;
+class WindowProjection;
 
 namespace TrafficRenderer
 {
@@ -19,6 +21,14 @@ Draw(Canvas &canvas, const TrafficLook &traffic_look,
      bool fading,
      const FlarmTraffic &traffic, Angle angle,
      FlarmColor color, PixelPoint pt) noexcept;
+
+void
+Draw(Canvas &canvas, const TrafficLook &traffic_look,
+     bool fading,
+     const FlarmTraffic &traffic, Angle angle,
+     FlarmColor color, PixelPoint pt,
+     const FlarmTrafficHistory::TrailPoints *trail,
+     const WindowProjection &projection) noexcept;
 
 void
 Draw(Canvas &canvas, const TrafficLook &traffic_look,
