@@ -233,6 +233,7 @@ XCSOAR_SOURCES := \
 	$(SRC)/FLARM/FlarmNetDatabase.cpp \
 	$(SRC)/FLARM/FlarmNetReader.cpp \
 	$(SRC)/FLARM/Traffic.cpp \
+	$(SRC)/FLARM/TrafficHistory.cpp \
 	$(SRC)/FLARM/Calculations.cpp \
 	$(SRC)/FLARM/Friends.cpp \
 	$(SRC)/FLARM/Computer.cpp \
