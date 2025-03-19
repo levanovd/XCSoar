@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="org.xcsoar"
+          package="org.xcsoar2"
           android:installLocation="auto"
           android:versionCode="165"
           android:versionName="7.44">
@@ -61,14 +61,14 @@
       </intent-filter>
     </activity>
 
-    <provider android:name="org.xcsoar.FileProvider"
-              android:authorities="org.xcsoar"
+    <provider android:name="org.xcsoar2.FileProvider"
+              android:authorities="org.xcsoar2"
               android:exported="false"
               android:grantUriPermissions="true"/>
 
     <provider
         android:name=".AllFilesDocumentsProvider"
-        android:authorities="org.xcsoar.allfiles"
+        android:authorities="org.xcsoar2.allfiles"
         android:exported="true"
         android:grantUriPermissions="true"
         android:permission="android.permission.MANAGE_DOCUMENTS">
