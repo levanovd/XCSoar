@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 // Copyright The XCSoar Project
 
-package org.xcsoar;
+package org.xcsoar2;
 
 import java.io.File;
 import android.util.Log;
@@ -218,10 +218,10 @@ class NativeView extends SurfaceView
    */
   private Bitmap loadResourceBitmap(String name) {
     /* find the resource */
-    int resourceId = resources.getIdentifier(name, "drawable", "org.xcsoar");
+    int resourceId = resources.getIdentifier(name, "drawable", "org.xcsoar2");
     if (resourceId == 0) {
       resourceId = resources.getIdentifier(name, "drawable",
-                                           "org.xcsoar.testing");
+                                           "org.xcsoar2.testing");
       if (resourceId == 0)
         return null;
     }
@@ -289,7 +289,7 @@ class NativeView extends SurfaceView
 
       /* this URI is going to be handled by FileProvider */
       Uri uri = new Uri.Builder().scheme("content")
-        .authority("org.xcsoar")
+        .authority("org.xcsoar2")
         .encodedPath("/waypoints/" + id + "/" + Uri.encode(filename))
         .build();
 

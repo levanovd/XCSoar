@@ -10,7 +10,7 @@
  * White	GND
  */
 
-package org.xcsoar;
+package org.xcsoar2;
 
 import java.io.IOException;
 

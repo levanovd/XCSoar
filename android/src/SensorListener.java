@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 // Copyright The XCSoar Project
 
-package org.xcsoar;
+package org.xcsoar2;
 
 /**
  * Handler for sensor values obtained from Java code.

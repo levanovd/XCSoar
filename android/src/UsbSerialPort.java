@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-only
 // Copyright The XCSoar Project
 
-package org.xcsoar;
+package org.xcsoar2;
 
 import android.annotation.TargetApi;
 import android.hardware.usb.UsbDevice;

@@ -4,7 +4,7 @@
 /* TextUtil.java - Android text handling to be used by C++ Code via jni.
  */
 
-package org.xcsoar;
+package org.xcsoar2;
 
 import android.graphics.Rect;
 import android.graphics.Paint;

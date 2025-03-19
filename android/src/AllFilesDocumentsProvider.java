@@ -26,7 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.xcsoar;
+package org.xcsoar2;
 
 import android.content.ContentResolver;
 import android.content.Context;
