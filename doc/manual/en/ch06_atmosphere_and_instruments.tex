@@ -258,9 +258,21 @@ thermal.  As the arrow approaches the bottom of the band, then the
 glider is nearing the break-off height and the pilot should consider
 taking even a weak thermal.
 
-\section{Thermal locator}
+\section{Thermal locator}\label{sec:thermal-locator}
 An algorithm estimates the centre of the lift when circling.  The
 thermal marker symbol is a green circle with a spiral.
+
+With \config{thermallocator} on and a total energy vario connected,
+XCSoar fits a bell shaped lift profile to the netto vario of the last
+two minutes, at the places it was measured, drifted with the wind; the
+recent readings count most, except for the width of the lift, which
+needs all of them.  The centre can then lie outside the circle flown,
+and lift crossed before the turn counts.  Where its lift is positive,
+it is drawn around the marker as rings in the lift colours of vario
+trail style 2 (yellow to red), whatever the trail's style, on the
+trail's scale, each from where the lift rises into a colour to where
+it rises into the next, out to twice the radius of the lift.
+Otherwise, it takes the mean of the positions weighted by their lift.
 
 \begin{center}
 \includegraphics[angle=0,width=0.8\linewidth,keepaspectratio='true']{figures/shot-tlocator-circling.png}

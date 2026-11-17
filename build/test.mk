@@ -102,7 +102,7 @@ TEST_NAMES = \
 	TestFilteredVarioComputer \
 	TestBasicComputer \
 	TestVarioSynthesiser TestAudioVario \
-	TestWaypointReader TestWaypointDisplay TestThermalBase \
+	TestWaypointReader TestWaypointDisplay TestThermalBase TestThermalFit \
 	TestSpeedVector \
 	TestFlarmNet TestFlarmMessaging TestFlarmBinaryProtocol \
 	TestFlarmSpokenAlert TestSpokenVerticalSpeed \
@@ -988,6 +988,14 @@ TEST_CLIMB_AV_CALC_SOURCES = \
 	$(TEST_SRC_DIR)/TestClimbAvCalc.cpp
 TEST_CLIMB_AV_CALC_DEPENDS = MATH
 $(eval $(call link-program,TestClimbAvCalc,TEST_CLIMB_AV_CALC))
+
+TEST_THERMAL_FIT_SOURCES = \
+	$(SRC)/Computer/ThermalFit.cpp \
+	$(SRC)/NMEA/ThermalLocator.cpp \
+	$(TEST_SRC_DIR)/tap.c \
+	$(TEST_SRC_DIR)/TestThermalFit.cpp
+TEST_THERMAL_FIT_DEPENDS = GEO MATH UTIL TIME
+$(eval $(call link-program,TestThermalFit,TEST_THERMAL_FIT))
 
 TEST_CIRCLING_WIND_SOURCES = \
 	$(SRC)/Computer/Wind/CirclingWind.cpp \

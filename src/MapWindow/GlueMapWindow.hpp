@@ -409,6 +409,8 @@ protected:
   /* virtual methods from class MapWindow */
   void Render(Canvas &canvas, const PixelRect &rc) noexcept override;
   void DrawThermalEstimate(Canvas &canvas) const noexcept override;
+  /** the lift of the thermal estimate, under the trail */
+  void DrawThermalLift(Canvas &canvas) const noexcept;
   void RenderTrail(Canvas &canvas,
                    const PixelPoint aircraft_pos) noexcept override;
   void RenderTrackBearing(Canvas &canvas,

@@ -128,6 +128,13 @@ Version 7.47 - not yet released
     settings; retain unsent edits if a save fails
   - Larus: pass on the instantaneous wind of ``$PLARW`` (``I``) next
     to the average wind (``A``)
+  - thermal locator: with the new Thermal Locator setting (Gauges,
+    off by default) and a total energy vario, fit a bell shaped
+    lift profile to the netto vario of the last two minutes instead of
+    taking the lift weighted mean of the positions; its centre can
+    lie outside the circle flown, and where its lift is positive it is
+    drawn as rings in the colours of vario trail style 2, on the
+    trail's scale, around the thermal marker
   - fix a FLARM or Flytec flight log that started at 23:00 so the
     recorded time wraps at midnight instead of jumping to 15:00
   - fix coordinates sent with 60 minutes to FLARM, Altair, CAI302 and LXNAV

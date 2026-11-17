@@ -26,6 +26,7 @@ LIBCOMPUTER_SOURCES = \
 	$(SRC)/Computer/WarningComputer.cpp \
 	$(SRC)/Computer/ThermalRecency.cpp \
 	$(SRC)/Computer/ThermalLocator.cpp \
+	$(SRC)/Computer/ThermalFit.cpp \
 	$(SRC)/Computer/ThermalBase.cpp \
 	$(SRC)/Computer/LiftDatabaseComputer.cpp \
 	$(SRC)/Computer/LogComputer.cpp \

@@ -714,6 +714,78 @@ GlueMapWindow::DrawMapScale(Canvas &canvas, const MapHudLayout &layout,
   DrawMapLabelRow(canvas, font, scale_pos.left, bottom, titles);
 }
 
+/**
+ * The lift of a thermal where it is positive, in the colours of vario
+ * trail style 2 on the trail's scale (its sink and lift at the ends),
+ * whatever the trail's style.  Without OpenGL only the outer edge of
+ * each colour.
+ */
+static void
+DrawLiftProfile(Canvas &canvas, const MapWindowProjection &projection,
+                PixelPoint centre, const LiftProfile &profile,
+                const TrailLook &trail,
+                const TrailRenderer &trail_renderer) noexcept
+{
+  if (profile.lift <= 0)
+    return;
+
+  static constexpr unsigned N = TrailLook::NUMSNAILCOLORS;
+  auto LowestOf = [&](unsigned i) {
+    return trail_renderer.GetVarioColorLowest(i);
+  };
+
+  /* only where it climbs: each colour a ring from where the lift rises
+     above its lowest, or above zero, to where it rises above the next
+     one, so the colours do not stack; all out to two radii: the colour
+     of the air around has no outer edge, and one just above it would
+     reach far out, then vanish when the air around crosses its edge */
+  auto EdgeOf = [&](unsigned i) { return std::max(LowestOf(i), 0.); };
+  unsigned first = 0, end = 0;
+  for (unsigned i = 0; i < N; ++i) {
+    if (LowestOf(i) <= std::max(profile.around, 0.))
+      first = i;
+    if (LowestOf(i) < profile.lift)
+      end = i + 1;
+  }
+
+  const double above = profile.lift - profile.around;
+  const double reach = 2 * profile.radius;
+  auto RadiusOf = [&](double edge) {
+    const double d = edge <= profile.around
+      ? reach
+      : std::min(reach, profile.radius *
+                 sqrt(log(above / (edge - profile.around))));
+    return projection.GeoToScreenDistance(d);
+  };
+
+#ifdef ENABLE_OPENGL
+  const ScopeAlphaBlend alpha_blend;
+  canvas.SelectNullPen();
+#else
+  canvas.SelectHollowBrush();
+#endif
+  for (unsigned i = first; i < end; ++i) {
+    const unsigned outer = RadiusOf(EdgeOf(i));
+    const unsigned inner = i + 1 < end ? RadiusOf(EdgeOf(i + 1)) : 0;
+    if (inner >= outer)
+      continue;
+#ifdef ENABLE_OPENGL
+    static constexpr uint8_t alpha = 128;
+    canvas.Select(Brush(trail.lift_colors[i].WithAlpha(alpha)));
+    if (inner > 0) {
+      canvas.DrawAnnulus(centre, inner, outer,
+                         Angle::Zero(), Angle::HalfCircle());
+      canvas.DrawAnnulus(centre, inner, outer,
+                         Angle::HalfCircle(), Angle::Zero());
+    } else
+      canvas.DrawCircle(centre, outer);
+#else
+    canvas.Select(Pen(Layout::ScalePenWidth(2), trail.lift_colors[i]));
+    canvas.DrawCircle(centre, outer);
+#endif
+  }
+}
+
 void
 GlueMapWindow::DrawThermalEstimate(Canvas &canvas) const noexcept
 {
@@ -732,9 +804,32 @@ GlueMapWindow::DrawThermalEstimate(Canvas &canvas) const noexcept
 }
 
 void
+GlueMapWindow::DrawThermalLift(Canvas &canvas) const noexcept
+{
+  const ThermalLocatorInfo &thermal_locator = Calculated().thermal_locator;
+  if (!InCirclingMode() || !IsNearSelf() ||
+      !thermal_locator.estimate_profile_valid)
+    return;
+
+  /* the trail's colour scale of the frame before: the trail is drawn
+     over the lift */
+  const LiftProfile &profile = thermal_locator.estimate_profile;
+  const PixelPoint p =
+    render_projection.GeoToScreen(thermal_locator.estimate_location);
+  const int reach = render_projection.GeoToScreenDistance(2 * profile.radius);
+  if (!render_projection.GetScreenRect().WithMargin(reach).Contains(p))
+    return;
+
+  DrawLiftProfile(canvas, render_projection, p, profile, look.trail,
+                  trail_renderer);
+}
+
+void
 GlueMapWindow::RenderTrail(Canvas &canvas,
                            const PixelPoint aircraft_pos) noexcept
 {
+  DrawThermalLift(canvas);
+
   TimeStamp min_time;
   switch(GetMapSettings().trail.length) {
   case TrailSettings::Length::OFF:

@@ -193,6 +193,10 @@ struct FeaturesSettings {
   /** Navigate by baro altitude instead of GPS altitude */
   bool nav_baro_altitude_enabled;
 
+  /** Locate thermals by fitting a lift profile to the netto vario of
+      a total energy vario (#ThermalFit) */
+  bool thermal_fit_enabled;
+
   void SetDefaults();
 };
 

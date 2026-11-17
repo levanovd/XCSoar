@@ -13,6 +13,9 @@
 #include "LiftDatabaseComputer.hpp"
 #include "AverageVarioComputer.hpp"
 #include "ThermalLocator.hpp"
+#include "ThermalFit.hpp"
+
+#include <memory>
 
 struct VarioInfo;
 struct OneClimbInfo;
@@ -42,6 +45,8 @@ class GlideComputerAirData {
   LiftDatabaseComputer lift_database_computer;
 
   ThermalLocator thermallocator;
+  /** only while enabled, it keeps two minutes of samples */
+  std::unique_ptr<ThermalFit> thermal_fit;
 
   AverageVarioComputer average_vario;
 

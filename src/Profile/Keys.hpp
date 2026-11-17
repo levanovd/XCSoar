@@ -158,6 +158,7 @@ constexpr std::string_view UTCOffsetSigned = "UTCOffsetSigned";
 constexpr std::string_view LocalTimeSource = "LocalTimeSource";
 constexpr std::string_view TimeZone = "TimeZone";
 constexpr std::string_view BlockSTF = "BlockSpeedToFly";
+constexpr std::string_view ThermalLocatorFit = "ThermalLocatorFit";
 constexpr std::string_view AutoZoom = "AutoZoom";
 constexpr std::string_view MenuTimeout = "MenuTimeout";
 constexpr std::string_view TerrainContrast = "TerrainContrast";

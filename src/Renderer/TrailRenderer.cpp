@@ -504,8 +504,9 @@ TrailRenderer::RefilterTraceFromHistory(const TrailSpatialFilter &filter) noexce
 /**
  * A high and a low percentile rather than the extremes, so a gust
  * spike does not take the strongest colours away from the lift the
- * trail mostly shows; in steps of 0.25 m/s, so the scale (and the
- * cached trail) changes only now and then.
+ * trail and the thermal's lift rings mostly show; in steps of
+ * 0.25 m/s, so the scale (and the cached trail) changes only now and
+ * then.
  */
 static std::pair<double, double>
 ComputeVarioRange(const TracePointVector &trace)
@@ -613,6 +614,16 @@ TrailRenderer::ColorScale::Index(double value) const noexcept
   if (unsigned(idx) >= max_index)
     return max_index;
   return unsigned(idx);
+}
+
+double
+TrailRenderer::GetVarioColorLowest(unsigned i) const noexcept
+{
+  /* the inverse of ColorScale::Index() on a vario scale */
+  if (i == 0)
+    return -INFINITY;
+  const double cv = i * (2.0 / TrailLook::NUMSNAILCOLORS) - 1;
+  return cv < 0 ? -cv * vario_range.first : cv * vario_range.second;
 }
 
 TrailRenderer::ColorScale

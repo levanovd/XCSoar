@@ -11,6 +11,7 @@ void
 ThermalLocatorInfo::Clear() noexcept
 {
   estimate_valid = false;
+  estimate_profile_valid = false;
 
   // clear thermal sources for first time.
   sources.clear();

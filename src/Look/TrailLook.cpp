@@ -114,6 +114,8 @@ TrailLook::Initialise(const TrailSettings &settings)
                         (i - NUMSNAILCOLORS / 2) *
                         Layout::ScalePenWidth(16u) / NUMSNAILCOLORS);
 
+    lift_colors[i] = GetColor(TrailSettings::Type::VARIO_2, ih);
+
     trail_widths[i] = iwidth;
     trail_brushes[i].Create(color);
     trail_pens[i].Create(minwidth, color);

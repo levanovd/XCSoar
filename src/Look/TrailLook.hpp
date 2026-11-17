@@ -4,6 +4,7 @@
 #pragma once
 
 #include "ui/canvas/Brush.hpp"
+#include "ui/canvas/Color.hpp"
 #include "ui/canvas/Pen.hpp"
 
 struct TrailSettings;
@@ -16,6 +17,9 @@ struct TrailLook {
   Brush trail_brushes[NUMSNAILCOLORS];
   Pen trail_pens[NUMSNAILCOLORS];
   Pen scaled_trail_pens[NUMSNAILCOLORS];
+  /** the colours of the thermal's lift rings, on the vario trail's
+      scale: those of vario style 2, whatever the trail's style */
+  Color lift_colors[NUMSNAILCOLORS];
 
   Pen trace_pen;
 

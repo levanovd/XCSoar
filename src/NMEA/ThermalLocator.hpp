@@ -24,6 +24,15 @@ struct ThermalSource
                                      const SpeedVector &wind) const noexcept;
 };
 
+/**
+ * The lift of a thermal: at a distance d from the centre it is
+ * around + (lift - around) * exp(-d^2 / radius^2).
+ */
+struct LiftProfile {
+  double lift, around; // [m/s]
+  double radius; // [m]
+};
+
 /** Structure for current thermal estimate from ThermalLocator */
 struct ThermalLocatorInfo
 {
@@ -33,6 +42,10 @@ struct ThermalLocatorInfo
   GeoPoint estimate_location;
   /** Is thermal estimation valid? */
   bool estimate_valid;
+
+  /** Does the estimate come with its lift (estimate_profile)? */
+  bool estimate_profile_valid;
+  LiftProfile estimate_profile;
 
   /** Position and data of the last thermal sources */
   TrivialArray<ThermalSource, MAX_SOURCES> sources;

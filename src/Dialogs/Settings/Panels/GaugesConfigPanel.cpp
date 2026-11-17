@@ -12,6 +12,7 @@
 
 enum ControlIndex {
   TAPosition,
+  ThermalLocator,
 };
 
 static constexpr StaticEnumChoice thermal_assistant_position_list[] = {
@@ -72,6 +73,15 @@ GaugesConfigPanel::Prepare(ContainerWindow &parent,
           _("Enable and select the position of the thermal assistant when overlayed on the main screen."),
           thermal_assistant_position_list,
           (unsigned)ui_settings.thermal_assistant_position);
+
+  AddBoolean(_("Thermal Locator"),
+             _("With a total energy vario, locate the thermal by fitting "
+               "a lift profile to the netto vario of the last two minutes, "
+               "and draw its lift around the thermal marker.  Off, the "
+               "centre is the lift weighted mean of the positions, which "
+               "needs less memory and computing power."),
+             CommonInterface::GetComputerSettings()
+             .features.thermal_fit_enabled);
 }
 
 bool
@@ -86,6 +96,10 @@ GaugesConfigPanel::Save(bool &_changed) noexcept
     CommonInterface::main_window->ReinitialiseLayout();
     changed = true;
   }
+
+  changed |= SaveValue(ThermalLocator, ProfileKeys::ThermalLocatorFit,
+                       CommonInterface::SetComputerSettings()
+                       .features.thermal_fit_enabled);
 
   _changed |= changed;
 

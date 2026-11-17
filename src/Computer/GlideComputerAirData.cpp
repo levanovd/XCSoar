@@ -42,6 +42,7 @@ GlideComputerAirData::ResetFlight(DerivedInfo &calculated,
   calculated.trace_history.circling_available.Clear();
 
   thermallocator.Reset();
+  thermal_fit.reset();
 
   gr_computer.Reset();
 
@@ -92,12 +93,37 @@ GlideComputerAirData::ProcessVertical(const MoreData &basic,
   wind_computer.Select(settings.wind, basic, calculated);
   wind_computer.ComputeHeadWind(basic, calculated);
 
-  if (basic.location_available)
-    thermallocator.Process(calculated.circling && calculated.turning,
-                           basic.time, basic.location,
-                           basic.netto_vario,
-                           calculated.GetWindOrZero(),
+  /* with a total energy vario the lift profile can be fitted; else
+     the lift weighted mean of the positions */
+  if (basic.location_available) {
+    if (settings.features.thermal_fit_enabled &&
+        basic.total_energy_vario_available) {
+      if (!thermal_fit)
+        thermal_fit = std::make_unique<ThermalFit>();
+
+      thermallocator.Reset();
+      thermal_fit->Process(calculated.turn_rate_heading_smoothed,
+                           calculated.circling,
+                           basic.airspeed_available
+                           ? basic.true_airspeed : basic.ground_speed,
+                           basic.time, basic.location, basic.nav_altitude,
+                           basic.netto_vario, calculated.GetWindOrZero(),
                            calculated.thermal_locator);
+    } else {
+      if (thermal_fit) {
+        /* its estimate is not the old locator's */
+        thermal_fit.reset();
+        calculated.thermal_locator.estimate_valid = false;
+      }
+
+      calculated.thermal_locator.estimate_profile_valid = false;
+      thermallocator.Process(calculated.circling && calculated.turning,
+                             basic.time, basic.location,
+                             basic.netto_vario,
+                             calculated.GetWindOrZero(),
+                             calculated.thermal_locator);
+    }
+  }
 
   LastThermalStats(basic, calculated, last_circling);
 

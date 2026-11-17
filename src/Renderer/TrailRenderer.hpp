@@ -157,6 +157,14 @@ public:
   static TrailQuery MakeTrailQuery(TimeStamp min_time,
                                    const WindowProjection &projection) noexcept;
 
+  /**
+   * The lowest netto vario [m/s] drawn in trail colour i on the vario
+   * scale of the last trail drawn, also for an altitude trail; none
+   * for colour 0.
+   */
+  [[gnu::pure]]
+  double GetVarioColorLowest(unsigned i) const noexcept;
+
   void ScanBounds(GeoBounds &bounds) const noexcept {
     trace.ScanBounds(bounds);
   }
