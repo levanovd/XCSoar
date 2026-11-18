@@ -39,11 +39,41 @@ class TrailRenderer {
     TracePoint::Time time{};
   };
 
+  /**
+   * Wind drift of a trail sample as a linear function of the current
+   * time: the drift parameter is "now * rate - offset".  Blending
+   * these terms with the weights used for the position gives the
+   * curve through the drifted fixes.
+   */
+  struct DriftTerms {
+    /** Sample time [s] multiplied by #rate. */
+    double offset{};
+    /** Fraction of the wind speed the sample drifts with. */
+    double rate{};
+
+    static constexpr DriftTerms FromTracePoint(const TracePoint &tp) noexcept {
+      const double rate = tp.GetDriftFactor() / 256.;
+      return {tp.GetTime().count() * rate, rate};
+    }
+
+    /** The drift parameter at the given time. */
+    constexpr double At(TimeStamp now) const noexcept {
+      return now.ToDuration().count() * rate - offset;
+    }
+
+    constexpr DriftTerms operator+(const DriftTerms &other) const noexcept {
+      return {offset + other.offset, rate + other.rate};
+    }
+
+    constexpr DriftTerms operator*(double weight) const noexcept {
+      return {offset * weight, rate * weight};
+    }
+  };
+
   /** Undrifted geo sample with metadata for per-frame drift projection. */
   struct CachedPathPoint {
     GeoPoint geo;
-    TracePoint::Time time{};
-    uint16_t drift_factor{};
+    DriftTerms drift;
   };
 
   /** Geo path with a single trail colour index (projected at draw time). */
@@ -233,17 +263,15 @@ private:
   [[gnu::pure]]
   static CachedPathPoint LerpCachedPathPoint(const GeoPoint &g0,
                                              const GeoPoint &g1,
-                                             TracePoint::Time t0,
-                                             TracePoint::Time t1,
-                                             unsigned df0, unsigned df1,
+                                             const DriftTerms &d0,
+                                             const DriftTerms &d1,
                                              double u) noexcept;
 
-  void BuildDirectColourRuns(const TrailPointData &prev_data,
-                             const TrailPointData &curr_data,
+  void BuildDirectColourRuns(double prev_value, double curr_value,
                              const GeoPoint &prev_geo,
                              const GeoPoint &curr_geo,
-                             unsigned prev_drift_factor,
-                             unsigned curr_drift_factor,
+                             const DriftTerms &prev_drift,
+                             const DriftTerms &curr_drift,
                              const std::vector<PixelPoint> &segment_pts,
                              TrailSettings::Type type,
                              const ColorScale &color_scale,
@@ -252,29 +280,14 @@ private:
 
   void BuildSmoothColourRuns(const GeoPoint &g0, const GeoPoint &g1,
                              const GeoPoint &g2, const GeoPoint &g3,
-                             TracePoint::Time time1,
-                             TracePoint::Time time2,
-                             unsigned drift_factor1,
-                             unsigned drift_factor2,
+                             const DriftTerms &d0, const DriftTerms &d1,
+                             const DriftTerms &d2, const DriftTerms &d3,
                              unsigned num_segments,
-                             const TrailPointData &prev_data,
-                             const TrailPointData &curr_data,
+                             double prev_value, double curr_value,
                              TrailSettings::Type type,
                              const ColorScale &color_scale,
                              bool use_merge_vario,
                              std::vector<CachedColourRun> &runs) noexcept;
-
-  /** Inline Catmull-Rom pieces for the bounded smoothed tail (#2664). */
-  void DrawSmoothTailSegmentInline(Canvas &canvas,
-                                   const PixelPoint &p0, const PixelPoint &p1,
-                                   const PixelPoint &p2, const PixelPoint &p3,
-                                   unsigned num_segments,
-                                   const TrailPointData &prev_data,
-                                   const TrailPointData &curr_data,
-                                   TrailSettings::Type type,
-                                   const ColorScale &color_scale,
-                                   bool scaled_trail,
-                                   bool use_merge_vario) noexcept;
 
   bool SyncTrace(const TraceComputer &trace_computer,
                  const TrailQuery &query) noexcept;
@@ -313,9 +326,6 @@ private:
                    const TrailSettings &settings,
                    const ColorScale &color_scale,
                    bool scaled_trail,
-                   bool use_smoothing,
-                   unsigned num_segments,
-                   size_t first_smoothed_point,
                    const NMEAInfo &basic,
                    PixelPoint aircraft_pos) noexcept;
 
